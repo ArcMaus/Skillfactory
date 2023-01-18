@@ -58,15 +58,3 @@ while game_over == False:
 
 print_maps()
 print("Победил", win)
-
-
-
-
-
-
-
-
-
-
-
-
