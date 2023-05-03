@@ -1,0 +1,14 @@
+user1 = User.objects.create_user('Евгений') 
+user2 = User.objects.create_user('Игнатий')
+
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+cat1 = Category.objects.create(category_name='Мода')
+cat2 = Category.objects.create(category_name='Кулинария')
+cat3 = Category.objects.create(category_name='Финансы')
+cat4 = Category.objects.create(category_name='Мифы')
+
+post1 = Post.objects.create(post_author = Author.objects.get(pk=1), post_title ='Мир моды скорбит по Вячеславу Зайцеву', post_text = 'Соболезнования семье модельера от себя и от имени своего дома моды выразил Валентин Юдашкин. Историк моды Александр Васильев назвал Зайцева гордостью отечественной моды.', post_type = 'статья')
+post2 = Post.objects.create(post_author = Author.objects.get(pk=2), post_title ='На Землю летит Питер Пэн', post_text = 'Нестареющий мальчик в зеленом стремительно несется к Земле. Его цель - Капитан Крюк', post_type = 'новость')
+post3 = Post.objects.create(post_author = Author.objects.get(pk=3), post_title ='Статья сама себя не напишет', post_text = 'Как известно, текст сам себя не наберет. Однако, если обратиться к искусственному интеллекту', post_type = 'статья')
