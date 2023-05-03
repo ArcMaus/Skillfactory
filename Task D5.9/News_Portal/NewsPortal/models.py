@@ -1,0 +1,66 @@
+from django.db import models
+from django.db.models import Sum
+from django.contrib.auth.models import User
+
+
+class Author(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_rating = models.IntegerField(default=0)
+
+    def update_rating(self):
+        author_article_rating = Post.objects.aggregate(Sum('post_rating'))
+        author_comments_rating = Comment.objects.filter(post__author=self.id).aggregate(Sum('comment_rating'))
+        all_comments_rating = Comment.objects.aggregate(Sum('comment_rating'))
+        self.user_rating = author_article_rating * 3 + author_comments_rating + all_comments_rating
+        self.save()
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=64, unique=True)
+
+
+article = 'ART'
+news = 'NWS'
+
+TYPES = [(article, 'статья'), (news, 'новость')]
+
+
+class Post(models.Model):
+    post_author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    post_type = models.CharField(max_length=64, choices=TYPES)
+    post_time_in = models.DateTimeField(auto_now_add=True)
+    post_category = models.ManyToManyField(Category, through='PostCategory')
+    post_title = models.CharField(max_length=64)
+    post_text = models.TextField()
+    post_rating = models.IntegerField(default=0)
+
+    def like_post(self):
+        self.post_rating += 1
+        self.save()
+
+    def dislike_post(self):
+        self.post_rating -= 1
+        self.save()
+
+    def preview(self):
+        return f'{self.post_text[0:124]}...'
+
+
+class PostCategory(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+    comment_post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    comment_author = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment_text = models.CharField(max_length=255)
+    comment_time_in = models.DateTimeField(auto_now_add=True)
+    comment_rating = models.IntegerField(default=0)
+
+    def like_comment(self):
+        self.comment_rating += 1
+        self.save()
+
+    def dislike_comment(self):
+        self.comment_rating -= 1
+        self.save()
