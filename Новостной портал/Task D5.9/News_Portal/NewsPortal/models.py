@@ -8,11 +8,12 @@ class Author(models.Model):
     user_rating = models.IntegerField(default=0)
 
     def update_rating(self):
-        author_article_rating = Post.objects.aggregate(Sum('post_rating'))
-        author_comments_rating = Comment.objects.filter(post__author=self.id).aggregate(Sum('comment_rating'))
-        all_comments_rating = Comment.objects.aggregate(Sum('comment_rating'))
-        self.user_rating = author_article_rating * 3 + author_comments_rating + all_comments_rating
+        author_article_rating = Post.objects.filter(post_author_id=self).aggregate(Sum('post_rating')).get('post_rating__sum')
+        author_comments_rating = Comment.objects.filter(comment_author_id=self.user).aggregate(Sum('comment_rating')).get('comment_rating__sum')
+        all_comments_rating = Comment.objects.filter(comment_post_id__post_author_id=self).aggregate(Sum('comment_rating')).get('comment_rating__sum')
+        self.user_rating = int(author_comments_rating or 0) * 3 + int(all_comments_rating or 0) + int(author_article_rating or 0)
         self.save()
+
 
 class Category(models.Model):
     category_name = models.CharField(max_length=64, unique=True)

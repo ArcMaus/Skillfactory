@@ -12,3 +12,38 @@ cat4 = Category.objects.create(category_name='Мифы')
 post1 = Post.objects.create(post_author = Author.objects.get(pk=1), post_title ='Мир моды скорбит по Вячеславу Зайцеву', post_text = 'Соболезнования семье модельера от себя и от имени своего дома моды выразил Валентин Юдашкин. Историк моды Александр Васильев назвал Зайцева гордостью отечественной моды.', post_type = 'статья')
 post2 = Post.objects.create(post_author = Author.objects.get(pk=2), post_title ='На Землю летит Питер Пэн', post_text = 'Нестареющий мальчик в зеленом стремительно несется к Земле. Его цель - Капитан Крюк', post_type = 'новость')
 post3 = Post.objects.create(post_author = Author.objects.get(pk=3), post_title ='Статья сама себя не напишет', post_text = 'Как известно, текст сам себя не наберет. Однако, если обратиться к искусственному интеллекту', post_type = 'статья')
+
+Comment.objects.create(comment_post=Post.objects.get(pk=5), comment_author=User.objects.get(pk=1), comment_text='Статья - очешуеть!') 
+Comment.objects.create(comment_post=Post.objects.get(pk=3), comment_author=User.objects.get(pk=2), comment_text='Ну такое... Я бы лучше написал')
+Comment.objects.create(comment_post=Post.objects.get(pk=4), comment_author=User.objects.get(pk=6), comment_text='На ракете налетал - оттуда и деньги')
+Comment.objects.create(comment_post=Post.objects.get(pk=6), comment_author=User.objects.get(pk=3), comment_text='Господи! Ну наконец-то!')
+
+post1.like_post()
+post1.dislike_post()
+
+comment1.like_comment()
+comment1.dislike_comment()
+
+author1.update_rating
+
+top1 = Author.objects.order_by('-user_rating').values('user__username', 'user_rating')  
+top1[0]
+
+top2 = Post.objects.order_by('-post_rating').values('post_time_in', 'post_author_id__user__username', 'post_rating', 'post_title')
+top2[0]
+bestpost = Post.objects.get(post_rating=9)    
+bestpost.preview() 
+
+Comment.objects.filter(comment_post__post_rating=9).values('comment_time_in', 'comment_author__username', 'comment_rating', 'comment_text')
+
+
+
+
+
+
+
+
+ 
+
+
+
