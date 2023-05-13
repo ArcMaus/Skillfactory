@@ -1,40 +1,58 @@
+from NewsPortal.models import *
+from django.db.models import Sum
+from django.db.models import Max
+from django.contrib.auth.models import User
+
+
 user1 = User.objects.create_user('Евгений') 
 user2 = User.objects.create_user('Игнатий')
 
 author1 = Author.objects.create(user=user1)
 author2 = Author.objects.create(user=user2)
 
-cat1 = Category.objects.create(category_name='Мода')
-cat2 = Category.objects.create(category_name='Кулинария')
-cat3 = Category.objects.create(category_name='Финансы')
-cat4 = Category.objects.create(category_name='Мифы')
+cat1 = Category.objects.create(category_name='Культура')
+cat2 = Category.objects.create(category_name='Технологии')
+cat3 = Category.objects.create(category_name='Кулинария')
+cat4 = Category.objects.create(category_name='Наука')
+cat5 = Category.objects.create(category_name='История')
 
-post1 = Post.objects.create(post_author = Author.objects.get(pk=1), post_title ='Мир моды скорбит по Вячеславу Зайцеву', post_text = 'Соболезнования семье модельера от себя и от имени своего дома моды выразил Валентин Юдашкин. Историк моды Александр Васильев назвал Зайцева гордостью отечественной моды.', post_type = 'статья')
-post2 = Post.objects.create(post_author = Author.objects.get(pk=2), post_title ='На Землю летит Питер Пэн', post_text = 'Нестареющий мальчик в зеленом стремительно несется к Земле. Его цель - Капитан Крюк', post_type = 'новость')
-post3 = Post.objects.create(post_author = Author.objects.get(pk=3), post_title ='Статья сама себя не напишет', post_text = 'Как известно, текст сам себя не наберет. Однако, если обратиться к искусственному интеллекту', post_type = 'статья')
+post1 = Post.objects.create(post_author = Author.objects.get(pk=1), post_title ='Дзадзики — легкий рецепт греческого соуса, который подойдет к любому блюду', post_text = 'Что такое дзадзики? Это соус на основе йогурта с добавлением чеснока и свежего огурца. Он прекрасно сочетается и с хлебом, и с овощами, и с мясом, и с рыбой. В общем, идеальная холодная закуска для летнего стола. Тем более его очень легко приготовить. Хотя есть один секрет — его нам раскрыла хозяйка из Афин, Александра Пападопулу. Дело в том, что в этом традиционном греческом блюде всегда используют только очень густой йогурт, отжатый через кусок марли. Кто-то добавляет в рецепт лимонный сок, укроп и оливковое масло, но греки считают это все лишним и чаще всего добавляют только уксус. Впереди у нас все лето, и можно поэкспериментировать с разными вариациями. И не забудьте, что йогурт должен быть натуральным, кислым, без вкусовых добавок. А все остальное смотрите ниже — в нашем аутентичном греческом рецепте.', post_type = 'статья')
 
-Comment.objects.create(comment_post=Post.objects.get(pk=5), comment_author=User.objects.get(pk=1), comment_text='Статья - очешуеть!') 
-Comment.objects.create(comment_post=Post.objects.get(pk=3), comment_author=User.objects.get(pk=2), comment_text='Ну такое... Я бы лучше написал')
-Comment.objects.create(comment_post=Post.objects.get(pk=4), comment_author=User.objects.get(pk=6), comment_text='На ракете налетал - оттуда и деньги')
-Comment.objects.create(comment_post=Post.objects.get(pk=6), comment_author=User.objects.get(pk=3), comment_text='Господи! Ну наконец-то!')
+post2 = Post.objects.create(post_author = Author.objects.get(pk=2), post_title ='Аппарат Джеймс Уэбб обнаружил бензол в планетарном диске', post_text = 'Впервые в истории молекула бензола была обнаружена в диске, формирующем планету, вокруг молодой звезды. Помимо бензола, было обнаружено множество других углеродных соединений (углеводородов) и некоторые молекулы, богатые кислородом. Слабыми или отсутствующими, однако, являются следы воды и силикатов. Диск принадлежит молодой звезде J160532, которая имеет массу в одну десятую от массы нашего Солнца и находится на расстоянии около 500 световых лет от нас, в направлении созвездия Скорпиона. Вокруг таких небольших молодых звезд формируется множество каменистых планет, похожих на Землю. До сих пор было трудно изучать молекулы в самой внутренней и горячей части этих дисков, где формируется большинство планет, из-за ограниченной чувствительности и спектрального разрешения предыдущих обсерваторий. MIRI, с другой стороны, идеально подходит для этой цели, поскольку ведет наблюдения в среднем инфракрасном диапазоне. Фактически, пройдя через пылевые облака, аппарат смог добраться до горячего газа внутри диска и обнаружил удивительное присутствие сложных молекул.', post_type = 'новость')
 
-post1.like_post()
-post1.dislike_post()
+post3 = Post.objects.create(post_author = Author.objects.get(pk=1), post_title ='История одного здания: Палеонтологический музей им. Ю.А. Орлова', post_text = 'История Палеонтологического музея началась еще в XVIII веке. В 1714 году Петр I учредил Кунсткамеру. Среди первых экспонатов нового музея были окаменелые остатки животных и растений, образцы минералов и горных пород. Это собрание называлось Минеральным кабинетом. В начале XIX века там хранилось уже более 20 тысяч экспонатов, поэтому в 1836 году кабинет преобразовали в Минералогический музей. Однако долгое время в него не пускали посетителей. К тому же не существовало даже полного перечня экспонатов. Коллекцию рассортировали и упорядочили только в конце XIX века, когда директором музея стал геолог и палеонтолог Федор Шмидт. При нем собрание переименовали в Геологический музей. Следующий директор Феодосий Чернышев разделил коллекцию на две части. У музея появились геологический и минералогический отделы со своими заведующими. Все палеонтологические экспонаты — остатки вымерших организмов — вошли в геологическое отделение. А вскоре учреждение вновь переименовали, на этот раз в Геологический и Минералогический музей им. Петра Великого.', post_type = 'статья')
 
-comment1.like_comment()
-comment1.dislike_comment()
+post1.post_category.add(cat1)
+post1.post_category.add(cat3)
+post1.save()
+post2.post_category.add(cat2)
+post2.post_category.add(cat4)
+post2.save()
+post3.post_category.add(cat1)
+post3.post_category.add(cat5)
+post3.save()
 
-author1.update_rating
+Comment.objects.create(comment_post=Post.objects.get(pk=1), comment_author=User.objects.get(pk=2), comment_text='Интересная вкусняха!') 
+Comment.objects.create(comment_post=Post.objects.get(pk=2), comment_author=User.objects.get(pk=1), comment_text='Ну наконец-то нашелся!')
+Comment.objects.create(comment_post=Post.objects.get(pk=3), comment_author=User.objects.get(pk=1), comment_text='Надо бы сходить в этот музей...')
+Comment.objects.create(comment_post=Post.objects.get(pk=1), comment_author=User.objects.get(pk=2), comment_text='Неправда, не к любому блюду он подойдет.')
 
-top1 = Author.objects.order_by('-user_rating').values('user__username', 'user_rating')  
-top1[0]
+Post.objects.get(pk=1).like_post()
+Post.objects.get(pk=2).dislike_post()
 
-top2 = Post.objects.order_by('-post_rating').values('post_time_in', 'post_author_id__user__username', 'post_rating', 'post_title')
-top2[0]
-bestpost = Post.objects.get(post_rating=9)    
-bestpost.preview() 
+Comment.objects.get(pk=1).like_comment()
+Comment.objects.get(pk=2).dislike_comment()
 
-Comment.objects.filter(comment_post__post_rating=9).values('comment_time_in', 'comment_author__username', 'comment_rating', 'comment_text')
+Author.objects.get(pk=1).update_rating
+Author.objects.get(pk=2).update_rating
+
+Author.objects.order_by('-user_rating').values('user__username', 'user_rating').first()  
+
+max_rating=Post.objects.aggregate(Max('post_rating')).get('post_rating__max')
+Post.objects.order_by('-post_rating').values('post_time_in', 'post_author_id__user__username', 'post_rating', 'post_title').first()
+Post.objects.get(post_rating=max_rating).preview()
+
+Comment.objects.filter(comment_post__post_rating=max_rating).values('comment_time_in', 'comment_author__username', 'comment_rating', 'comment_text')
 
 
 
