@@ -1,0 +1,27 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Post Item
+{% endblock title %}
+
+{% block content %}
+<h1>{{ post_item }}</h1>
+<h3>{{ time_now|date:'d M Y' }}</h3>
+   <hr>
+       <table>
+           <tr>
+               <td>Заголовок</td>
+               <td>Дата публикации</td>
+               <td>Текст</td>
+           </tr>
+           {% for post_item in post %}
+           <tr>
+
+               <td>{{ post.post_title }}</td>
+               <td>{{ post.post_time_in }}</td>
+               <td>{{ post.post_text }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+{% endblock content %}

@@ -43,8 +43,8 @@ Post.objects.get(pk=2).dislike_post()
 Comment.objects.get(pk=1).like_comment()
 Comment.objects.get(pk=2).dislike_comment()
 
-Author.objects.get(pk=1).update_rating
-Author.objects.get(pk=2).update_rating
+Author.objects.get(pk=1).update_rating()
+Author.objects.get(pk=2).update_rating()
 
 Author.objects.order_by('-user_rating').values('user__username', 'user_rating').first()  
 
