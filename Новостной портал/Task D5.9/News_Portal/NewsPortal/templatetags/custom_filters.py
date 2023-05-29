@@ -1,16 +1,18 @@
 from django import template
-import re
 
 
 register = template.Library()
 
 
+bad_words = ['Музей', 'Музея', 'Музею', 'Музеем', 'Бензол', 'Бензола', 'Бензолу', 'Бензолом', 'Дзадзики', 'Дзадзики?']
+
+
 @register.filter()
-def censor_text(post_text):
-    bad_words = ['Редиска', 'Хрен', 'Петрушка']
-
-    for word in bad_words:
-        pattern = re.compile(word, re.IGNORECASE)
-        post_text = pattern.sub('*' * len(word[1:]), post_text)
-
-    return post_text
+def censor(word):
+    if isinstance(word, str):
+        for i in word.split():
+            if i.capitalize() in bad_words:
+                word = word.replace(i, i[0] + '*' * len(i))
+    else:
+        raise ValueError('custom_filters -> censor -> A string is expected, but a different data type has been entered')
+    return word

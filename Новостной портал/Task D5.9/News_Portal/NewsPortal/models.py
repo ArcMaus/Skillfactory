@@ -39,7 +39,7 @@ class Post(models.Model):
         return reverse('detail', args=[self.id])
 
     def __str__(self):
-        return f'{self.post_title}: {self.post_text[:50]}...'
+        return f'{self.post_title}'
 
     def like_post(self):
         self.post_rating += 1

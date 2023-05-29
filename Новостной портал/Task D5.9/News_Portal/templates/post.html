@@ -22,9 +22,9 @@ News
            {% for post_item in post %}
            <tr>
 
-               <td>{{ post.post_title }}</td>
-               <td>{{ post.post_time_in }}</td>
-               <td>{{ post.post_text|truncatechars:20 }}</td>
+               <td>{{ post_item.post_title|censor }}</td>
+               <td>{{ post_item.post_time_in }}</td>
+               <td>{{ post_item.post_text|truncatechars:20|censor }}</td>
            </tr>
            {% endfor %}
 
