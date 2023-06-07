@@ -11,8 +11,8 @@ urlpatterns = [
     path('search/', PostFilterView.as_view(), name='post_filter'),
     path('news/create/', NewsCreate.as_view(), name='news_create'),
     path('articles/create/', ArticleCreate.as_view(), name='article_create'),
-    path('news/<int:pk>/update/', NewsUpdate.as_view(), name='news_update'),
-    path('articles/<int:pk>/update/', ArticleUpdate.as_view(), name='article_update'),
+    path('news/<int:pk>/edit/', NewsUpdate.as_view(), name='news_update'),
+    path('articles/<int:pk>/edit/', ArticleUpdate.as_view(), name='article_update'),
     path('news/<int:pk>/delete/', NewsDelete.as_view(), name='news_delete'),
     path('articles/<int:pk>/delete/', ArticleDelete.as_view(), name='article_delete')
 ]

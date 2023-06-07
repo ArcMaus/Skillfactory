@@ -5,7 +5,7 @@
 <hr>
 <form action="" method="post">
     {% csrf_token %}
-    <p>Удаляем "{{ object.name }}"?</p>
-    <input type="submit" value="Delete" />
+    <p>Удаляем новость "{{ object.name }}"?</p>
+    <input type="submit" value="Удалить" />
 </form>
 {% endblock content %}

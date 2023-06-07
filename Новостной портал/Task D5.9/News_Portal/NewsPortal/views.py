@@ -38,7 +38,6 @@ class PostFilterView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
-        context['curr_author'] = self.request.GET.get('post_author__user__username__icontains')
         context['curr_date'] = self.request.GET.get('post_time_in__gt')
         context['curr_title'] = self.request.GET.get('post_title__icontains')
         pprint(context)

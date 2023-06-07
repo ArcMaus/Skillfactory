@@ -12,7 +12,7 @@ News
 
    <form action="" method="get">
        <label >Автор:</label>
-       {{ filterset.form.author }}
+       {{ filterset.form.post_author__user__username }}
         <p></p>
        <label >Заголовок:</label>
        <input type="text"  name="post_title__icontains" value="{{ curr_title }}">
@@ -26,14 +26,14 @@ News
     <h3>Найденных публикаций: {{ post|length }}</h3>
 
    <hr>
-   {% if post %}
+   {% if post_search %}
        <table>
            <tr>
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Текст</td>
            </tr>
-           {% for post_item in post %}
+           {% for post_item in post_search %}
            <tr>
                <td>{{ post_item.post_title|censor }}</td>
                <td>{{ post_item.post_time_in }}</td>
