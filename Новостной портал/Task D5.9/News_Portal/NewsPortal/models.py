@@ -32,11 +32,11 @@ class Post(models.Model):
     post_time_in = models.DateTimeField(auto_now_add=True)
     post_category = models.ManyToManyField(Category, through='PostCategory')
     post_title = models.CharField(max_length=64, unique=True)
-    post_text = models.TextField()
+    post_text = models.TextField(unique=True)
     post_rating = models.IntegerField(default=0)
 
     def get_absolute_url(self):
-        return reverse('detail', args=[self.id])
+        return reverse('post_detail', args=[self.id])
 
     def __str__(self):
         return f'{self.post_title}'
