@@ -10,6 +10,7 @@ News
 {% block content %}
    <h1>Поиск публикаций</h1>
 
+   <hr>
    <form action="" method="get">
        <label >Автор:</label>
        {{ filterset.form.post_author__user__username }}
@@ -22,9 +23,7 @@ News
         <p></p>
        <input type="submit" value="Найти" />
    </form>
-
-    <h3>Найденных публикаций: {{ post|length }}</h3>
-
+   <h3>Найденных публикаций: {{ post|length }}</h3>
    <hr>
    {% if post_search %}
        <table>
@@ -32,12 +31,18 @@ News
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Текст</td>
+               <td>Категория</td>
            </tr>
            {% for post_item in post_search %}
            <tr>
                <td>{{ post_item.post_title|censor }}</td>
                <td>{{ post_item.post_time_in }}</td>
                <td>{{ post_item.post_text|truncatechars:20|censor }}</td>
+               <td>
+                   {% for category in post_item.post_category.all %}
+                        <a href="{% url 'category_list' category.id %}">{{category}}</a>
+                   {% endfor %}
+               </td>
            </tr>
            {% endfor %}
        </table>

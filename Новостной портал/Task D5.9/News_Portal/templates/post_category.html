@@ -52,4 +52,11 @@ News
            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
        {% endif %}
    {% endif %}
+<hr>
+{% if is_not_subscribers %}
+<button> <a href="subscribe"> Подписаться на категорию!</a> <button>
+{% endif %}
+{% if not is_not_subscribers %}
+<button> <a href="unsubscribe"> Отписаться от категории!</a> <button>
+{% endif %}
 {% endblock content %}

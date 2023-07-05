@@ -14,11 +14,16 @@ Post Item
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Текст</td>
-           </tr>
+               <td>Категория<td>
            <tr>
                <td>{{ post_item.post_title|censor }}</td>
                <td>{{ post_item.post_time_in|date:'d M Y' }}</td>
                <td>{{ post_item.post_text|censor }}</td>
+               <td>
+                   {% for category in post_item.post_category.all %}
+                        <a href="{% url 'category_list' category.id %}">{{category}}</a>
+                   {% endfor %}
+               </td>
            </tr>
        </table>
 {% endblock content %}

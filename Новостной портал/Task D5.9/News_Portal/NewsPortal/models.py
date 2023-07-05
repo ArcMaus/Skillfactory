@@ -8,6 +8,9 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.user
+
     def update_rating(self):
         author_article_rating = Post.objects.filter(post_author_id=self).aggregate(Sum('post_rating')).get('post_rating__sum')
         author_comments_rating = Comment.objects.filter(comment_author_id=self.user).aggregate(Sum('comment_rating')).get('comment_rating__sum')
@@ -18,15 +21,17 @@ class Author(models.Model):
 
 class Category(models.Model):
     category_name = models.CharField(max_length=64, unique=True)
+    subscribers = models.ManyToManyField(User, related_name='categories')
 
-
-article = 'ART'
-news = 'NWS'
-
-TYPES = [(article, 'статья'), (news, 'новость')]
+    def __str__(self):
+        return self.category_name
 
 
 class Post(models.Model):
+    article = 'ART'
+    news = 'NWS'
+    TYPES = [(article, 'статья'), (news, 'новость')]
+
     post_author = models.ForeignKey(Author, on_delete=models.CASCADE)
     post_type = models.CharField(max_length=64, choices=TYPES)
     post_time_in = models.DateTimeField(auto_now_add=True)
@@ -56,6 +61,11 @@ class Post(models.Model):
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+
+class PostSubscribers(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Comment(models.Model):

@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     PostList, PostDetail, PostFilterView, NewsCreate, ArticleCreate,
-    NewsUpdate, ArticleUpdate, NewsDelete, ArticleDelete, IndexView
+    NewsUpdate, ArticleUpdate, NewsDelete, ArticleDelete, IndexView,
+    CategoryList
 )
 from django.contrib.auth.views import LoginView, LogoutView
 from .views import upgrade_me
@@ -27,5 +28,7 @@ urlpatterns = [
     # path('signup/',
     #      BaseRegisterView.as_view(template_name='sign/signup.html'),
     #      name='signup'),
-    path('upgrade/', upgrade_me, name='upgrade')
+    path('upgrade/', upgrade_me, name='upgrade'),
+    path('categories/<int:pk>/', CategoryList.as_view(), name='category_list'),
 ]
+
