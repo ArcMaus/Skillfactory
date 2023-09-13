@@ -102,6 +102,12 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_FORMS = {'signup': 'NewsPortal.forms.BasicSignupForm'}
 
+CELERY_BROKER_URL = 'redis://:TWMmWav8OyI5QZToDmZS2D9mwkv2XkLZ@redis-11490.c302.asia-northeast1-1.gce.cloud.redislabs.com:11490'
+CELERY_RESULT_BACKEND = 'redis://:TWMmWav8OyI5QZToDmZS2D9mwkv2XkLZ@redis-11490.c302.asia-northeast1-1.gce.cloud.redislabs.com:11490'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -148,6 +154,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+SITE_URL = 'http://127.0.0.1:8000'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

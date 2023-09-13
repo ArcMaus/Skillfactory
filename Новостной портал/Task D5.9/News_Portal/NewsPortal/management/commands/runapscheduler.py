@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
-from .models import Post, Category
+from ...models import Post, Category
 
 
 logger = logging.getLogger(__name__)
