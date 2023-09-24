@@ -14,8 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from .tasks import send_email_post
 
 
 class PostList(ListView):
@@ -70,6 +69,7 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
         post = form.save(commit=False)
         post.post_type = 'новость'
         html_content = render_to_string('message.html', {'post': post})
+        send_email_post.delay()
 
         msg = EmailMultiAlternatives(
             subject=post.post_title,

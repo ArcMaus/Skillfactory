@@ -179,3 +179,99 @@ APSCHEDULER_RUN_NOW_TIMEOUT = 25
 SERVER_EMAIL = 'arczed@yandex.ru'
 
 DEFAULT_FROM_EMAIL = 'arczed@yandex.ru'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'debug_console': {
+            'format': '%(asctime)s %(levelname)s %(message)s'
+        },
+        'warning_console': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s'
+        },
+        'error_critical_console': {
+            'format': '%(asctime)s %(levelname)s %(message)s, %(pathname)s %(exc_info)s'
+        },
+        'general_file': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(module)s'
+        },
+        'errors_file': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s'
+        },
+        'security_file': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(module)s'
+        },
+        'error_mail': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s'
+        }
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatters': 'debug_console'
+        },
+        'log_in_general_file': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'formatters': 'general_file'
+         },
+        'log_in_errors_file': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'formatters': 'errors_file'
+        },
+        'log_in_security_file': {
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'formatters': 'security_file'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatters': 'error_mail'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['log_in_errors_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False
+        },
+        'django.server': {
+            'handlers': ['log_in_errors_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False
+        },
+        'django.template': {
+            'handlers': ['log_in_errors_file'],
+            'level': 'ERROR',
+            'propagate': False
+        },
+        'django.db.backends': {
+            'handlers': ['log_in_errors_file'],
+            'level': 'ERROR',
+            'propagate': False
+        },
+        'django.security': {
+            'handlers': ['log_in_security_file'],
+            'propagate': False
+        }
+    }
+}
