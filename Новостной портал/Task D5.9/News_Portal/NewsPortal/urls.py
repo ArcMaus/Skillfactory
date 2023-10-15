@@ -6,12 +6,13 @@ from .views import (
 )
 from django.contrib.auth.views import LoginView, LogoutView
 from .views import upgrade_me
+from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [
-    path('', PostList.as_view(), name='post_list'),
+    path('', cache_page(60*1)(PostList.as_view()), name='post_list'),
     path('profile/', IndexView.as_view(), name='profile'),
-    path('<int:pk>', PostDetail.as_view(), name='post_detail'),
+    path('<int:pk>', cache_page(60*5)(PostDetail.as_view()), name='post_detail'),
     path('search/', PostFilterView.as_view(), name='post_filter'),
     path('news/create/', NewsCreate.as_view(), name='news_create'),
     path('articles/create/', ArticleCreate.as_view(), name='article_create'),

@@ -57,6 +57,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -141,7 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -219,29 +220,29 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatters': 'debug_console'
+            'formatter': 'debug_console'
         },
         'log_in_general_file': {
             'level': 'INFO',
             'filters': ['require_debug_false'],
             'class': 'logging.FileHandler',
-            'formatters': 'general_file'
+            'formatter': 'general_file'
          },
         'log_in_errors_file': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'logging.FileHandler',
-            'formatters': 'errors_file'
+            'formatter': 'errors_file'
         },
         'log_in_security_file': {
             'filters': ['require_debug_false'],
             'class': 'logging.FileHandler',
-            'formatters': 'security_file'
+            'formatter': 'security_file'
         },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            'formatters': 'error_mail'
+            'formatter': 'error_mail'
         }
     },
     'loggers': {
@@ -275,3 +276,15 @@ LOGGING = {
         }
     }
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files')
+        }
+    }
+
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]

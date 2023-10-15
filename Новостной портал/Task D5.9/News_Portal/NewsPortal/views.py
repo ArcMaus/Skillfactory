@@ -15,6 +15,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from .tasks import send_email_post
+from django.utils.translation import gettext as _
 
 
 class PostList(ListView):

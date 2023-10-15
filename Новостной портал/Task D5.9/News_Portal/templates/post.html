@@ -1,11 +1,15 @@
 {% extends 'flatpages/default.html' %}
 
 {% load custom_filters %}
+{% load cache %}
 
+{% cache 30 title %}
 {% block title %}
 News
 {% endblock title %}
+{% endcache %}
 
+{% cache 30 content %}
 {% block content %}
    <h1>Все публикации</h1>
     <h3>{{ time_now|date:'d M Y' }}</h3>
@@ -53,3 +57,4 @@ News
        {% endif %}
    {% endif %}
 {% endblock content %}
+{% endcache %}

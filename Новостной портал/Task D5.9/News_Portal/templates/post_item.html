@@ -1,11 +1,15 @@
 {% extends 'flatpages/default.html' %}
 
 {% load custom_filters %}
+{% load cache %}
 
+{% cache 30 title %}
 {% block title %}
 Post Item
 {% endblock title %}
+{% endcache %}
 
+{% cache 30 content %}
 {% block content %}
 <h1>{{ post_item.post_title|censor }}</h1>
    <hr>
@@ -27,3 +31,4 @@ Post Item
            </tr>
        </table>
 {% endblock content %}
+{% endcache %}

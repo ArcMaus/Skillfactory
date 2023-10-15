@@ -1,5 +1,5 @@
 """
-WSGI config for News_Portal project.
+WSGI config for ad_board_project project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,9 +8,9 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 """
 
 import os
-import django
+
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'News_Portal.settings')
-django.setup()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ad_board_project.settings')
+
 application = get_wsgi_application()
